@@ -21,7 +21,7 @@ h1 {
 .movie-card {
   display: grid;
   grid-template-columns: 300px;
-  grid-template-rows: 420px 40px 80px;
+  grid-template-rows: 420px 50px 80px;
   border-radius: 1rem;
   background-color: white;
   text-align: center;
@@ -31,7 +31,7 @@ h1 {
   transform: scale(1.04);
 }
 .img-container {
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png");
+  background-image: url("https://i.ibb.co/wYfDvXV/Snipaste-2021-02-19-20-00-41.png");
   background-size: cover;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
@@ -47,6 +47,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-top: #c2c2c2 solid 1px;
 }
 .react-container div {
   cursor: pointer;
@@ -65,6 +66,7 @@ h1 {
 .suggestion {
   margin: 2rem;
   background-color: #3eb2ff;
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 1rem;
+  color: white;
 }
