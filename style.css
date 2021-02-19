@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: rgb(41, 41, 41);
+  display: grid;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+h1 {
+  color: white;
+  margin: 1rem;
+}
+
+.movie-card {
+  display: grid;
+  grid-template-columns: 300px;
+  grid-template-rows: 420px 40px 80px;
+  border-radius: 1rem;
+  background-color: white;
+  text-align: center;
+  transition: transform 300ms;
+}
+.movie-card:hover {
+  transform: scale(1.04);
+}
+.img-container {
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png");
+  background-size: cover;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+.movie-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.react-container {
+  padding: 0 1rem 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.react-container div {
+  cursor: pointer;
+}
+
+.like {
+  background-color: #3eff6f;
+  padding: 0.8rem;
+  border-radius: 1rem;
+}
+.dislike {
+  background-color: #ff2f4b;
+  padding: 0.8rem;
+  border-radius: 1rem;
+}
+.suggestion {
+  margin: 2rem;
+  background-color: #3eb2ff;
+  padding: 1rem;
+  border-radius: 1rem;
+}
