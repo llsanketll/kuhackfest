@@ -1,6 +1,6 @@
 const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 const genre_IDs = [28, 12, 16, 35, 80, 99, 18, 10751, 14, 36, 27, 10402, 9648, 10749, 878, 10770, 53, 10752, 37];
-const url = "https://api.themoviedb.org/3/search/movie?api_key=d47fa5c0c7cb3abd9ee5fbe08fa22559&query="
+const url = "https://api.themoviedb.org/3/search/movie?api_key=d47fa5c0c7cb3abd9ee5fbe08fa22559&adu&include_adult=false&query="
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
@@ -20,13 +20,16 @@ const like_button = document.querySelector(".like");
 const dislike_button = document.querySelector(".dislike");
 const getSuggestion = document.querySelector(".suggestion");
 const notseen_button = document.querySelector(".not-watched");
+const react_more_button = document.querySelector(".react-more");
 
 async function getResponse(url, addToList) {
   const res = await fetch(url + getRandomNumber(0, letters.length));
   const Json = await res.json();
   const data = await Json.results[getRandomNumber(0, Json.results.length)];
-  if (movie_IDs.includes(data.id))
+  if (movie_IDs.includes(data.id)) {
     getResponse(url);
+    return;
+  }
   else {
     const suffix = await (data.poster_path);
     if (suffix === null) {
@@ -99,5 +102,14 @@ getSuggestion.addEventListener('click', async () => {
   title.innerHTML = await best_movie.title;
   document.querySelector(".react-container").style.display = "none";
   document.querySelector("h1").innerText = "Suggested Movie"
-  console.log(best_genre);
+  react_more_button.classList.remove("hide");
+  document.querySelector(".movie-card").style.gridTemplateRows = "420px 50px";
+  getSuggestion.classList.add("hide");
+})
+
+react_more_button.addEventListener('click', e => {
+  document.querySelector(".movie-card").style.gridTemplateRows = "420px 50px 80px";
+  document.querySelector(".react-container").style.display = "flex";
+  react_more_button.classList.add("hide");
+  getResponse(url, false);
 })
