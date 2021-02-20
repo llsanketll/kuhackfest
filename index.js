@@ -23,7 +23,7 @@ const notseen_button = document.querySelector(".not-watched");
 const react_more_button = document.querySelector(".react-more");
 
 async function getResponse(url, addToList) {
-  const res = await fetch(url + getRandomNumber(0, letters.length));
+  const res = await fetch(url + letters[getRandomNumber(0, letters.length)]);
   const Json = await res.json();
   const data = await Json.results[getRandomNumber(0, Json.results.length)];
   if (movie_IDs.includes(data.id)) {
@@ -112,4 +112,5 @@ react_more_button.addEventListener('click', e => {
   document.querySelector(".react-container").style.display = "flex";
   react_more_button.classList.add("hide");
   getResponse(url, false);
+  document.querySelector("h1").innerText = "Rate Movies";
 })
