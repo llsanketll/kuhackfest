@@ -6,8 +6,6 @@ function getRandomNumber(min, max) {
 }
 
 const movie_IDs = [];
-const liked_movies = [];
-const disliked_movies = [];
 const genre_list = [];
 const genre_score = {};
 
@@ -25,8 +23,8 @@ const notseen_button = document.querySelector(".not-watched");
 
 async function getResponse(url, addToList) {
   const res = await fetch(url + getRandomNumber(0, letters.length));
-  const JSON = await res.json();
-  const data = await JSON.results[getRandomNumber(0, JSON.results.length)];
+  const Json = await res.json();
+  const data = await Json.results[getRandomNumber(0, Json.results.length)];
   if (movie_IDs.includes(data.id))
     getResponse(url);
   else {
@@ -39,7 +37,6 @@ async function getResponse(url, addToList) {
     img_container.style.backgroundImage = await `url(${image_URL})`;
     title.innerHTML = await data.title;
     if (addToList) {
-      console.log(data.genre_ids);
       genre_list.push(data.genre_ids);
       movie_IDs.push(data.id);
     }
@@ -52,9 +49,8 @@ getResponse(url);
 
 like_button.addEventListener('click', e => {
   getResponse(url, true);
-  //return that it liked this movie;
+
   if (genre_list.length > 0) {
-    liked_movies.push(...genre_list[genre_list.length - 1]);
     genre_list[genre_list.length - 1].forEach(e => {
       genre_score[e] += 1;
     })
@@ -64,7 +60,6 @@ dislike_button.addEventListener('click', e => {
   getResponse(url, true);
 
   if (genre_list.length > 0) {
-    disliked_movies.push(...genre_list[genre_list.length - 1]);
     genre_list[genre_list.length - 1].forEach(e => {
       genre_score[e] -= 1;
     })
@@ -75,10 +70,34 @@ notseen_button.addEventListener('click', e => {
   //return that user hasn't seen the movie
 })
 
-getSuggestion.addEventListener('click', e => {
-  //What to do when the suggestion button is pressed
-  console.log(genre_score);
-  console.log(liked_movies);
-  console.log(disliked_movies);
-  console.log(genre_list);
+getSuggestion.addEventListener('click', async () => {
+  //Find best genre
+  let best_genre = [];
+  let previous_score = 0;
+  Object.keys(genre_score).forEach(key => {
+    if (genre_score[key] >= previous_score) {
+      best_genre[0] = key;
+      previous_score = genre_score[key];
+    }
+  })
+  delete genre_score[best_genre[0]];
+  previous_score = 0;
+  Object.keys(genre_score).forEach(key => {
+    if (genre_score[key] > previous_score) {
+      best_genre[1] = key;
+      previous_score = genre_score[key];
+    }
+  })
+
+
+  const res = await fetch("https://api.themoviedb.org/3/discover/movie?api_key=d47fa5c0c7cb3abd9ee5fbe08fa22559&sort_by=vote_count.desc&page=1&with_genres=" + best_genre);
+  const Json = await res.json();
+  const best_movie = await Json.results[getRandomNumber(0, Json.results.length)];
+  const suffix = await (best_movie.poster_path);
+  const image_URL = `https://image.tmdb.org/t/p/w300/${suffix}`;
+  img_container.style.backgroundImage = await `url(${image_URL})`;
+  title.innerHTML = await best_movie.title;
+  document.querySelector(".react-container").style.display = "none";
+  document.querySelector("h1").innerText = "Suggested Movie"
+  console.log(best_genre);
 })
