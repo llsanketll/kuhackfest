@@ -28,7 +28,7 @@ h1 {
   transition: transform 300ms;
 }
 .movie-card:hover {
-  transform: scale(1.04);
+  transform: scale(1.02);
 }
 .img-container {
   background-image: url("https://i.ibb.co/wYfDvXV/Snipaste-2021-02-19-20-00-41.png");
@@ -57,11 +57,23 @@ h1 {
   background-color: #3eff6f;
   padding: 0.8rem;
   border-radius: 1rem;
+  transition: filter 300ms;
 }
 .dislike {
   background-color: #ff2f4b;
   padding: 0.8rem;
   border-radius: 1rem;
+  transition: filter 300ms;
+}
+.not-watched {
+  border: 2px solid gray;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  color: gray;
+  transition: background 300ms;
+}
+.hide {
+  display: none;
 }
 .suggestion {
   margin: 2rem;
@@ -69,4 +81,14 @@ h1 {
   padding: 0.5rem;
   border-radius: 1rem;
   color: white;
+  cursor: pointer;
+  transition: filter 200ms;
+}
+.not-watched:hover {
+  background-color: #d3d3d3;
+}
+.suggestion:hover,
+.like:hover,
+.dislike:hover {
+  filter: brightness(0.8);
 }
