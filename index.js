@@ -105,6 +105,8 @@ getSuggestion.addEventListener('click', async () => {
   react_more_button.classList.remove("hide");
   document.querySelector(".movie-card").style.gridTemplateRows = "420px 50px";
   getSuggestion.classList.add("hide");
+  console.log(Json.results);
+  console.log(best_genre);
 })
 
 react_more_button.addEventListener('click', e => {

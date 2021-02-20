@@ -7,6 +7,10 @@
 
 body {
   font-family: "Roboto", sans-serif;
+  background-image: url("./assets/cool-background.png");
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
   background-color: rgb(41, 41, 41);
   display: grid;
   justify-content: center;
@@ -14,8 +18,11 @@ body {
   text-align: center;
 }
 h1 {
+  background-color: rgb(41, 41, 41, 0.6);
+  border-radius: 1rem;
   color: white;
   margin: 1rem;
+  padding: 0.5rem;
 }
 
 .movie-card {
@@ -102,4 +109,16 @@ h1 {
   padding: 0.5rem;
   border-radius: 1rem;
   cursor: pointer;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 1rem;
+  width: 200px;
+}
+footer a {
+  text-decoration: none;
+  color: white;
 }
