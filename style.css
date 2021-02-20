@@ -42,6 +42,7 @@ h1 {
   background-size: cover;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
+  pointer-events: none;
 }
 .movie-title {
   display: flex;

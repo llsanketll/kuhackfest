@@ -5,6 +5,8 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+let suggested_movie_id;
+
 const movie_IDs = [];
 const genre_list = [];
 const genre_score = {};
@@ -77,6 +79,7 @@ getSuggestion.addEventListener('click', async () => {
   //Find best genre
   let best_genre = [];
   let previous_score = 0;
+
   Object.keys(genre_score).forEach(key => {
     if (genre_score[key] >= previous_score) {
       best_genre[0] = key;
@@ -93,9 +96,10 @@ getSuggestion.addEventListener('click', async () => {
   })
 
 
-  const res = await fetch("https://api.themoviedb.org/3/discover/movie?api_key=d47fa5c0c7cb3abd9ee5fbe08fa22559&sort_by=vote_count.desc&page=1&with_genres=" + best_genre);
-  const Json = await res.json();
+  let res = await fetch("https://api.themoviedb.org/3/discover/movie?api_key=d47fa5c0c7cb3abd9ee5fbe08fa22559&sort_by=vote_count.desc&page=1&with_genres=" + best_genre);
+  let Json = await res.json();
   const best_movie = await Json.results[getRandomNumber(0, Json.results.length)];
+  suggested_movie_id = best_movie.id;
   const suffix = await (best_movie.poster_path);
   const image_URL = `https://image.tmdb.org/t/p/w300/${suffix}`;
   img_container.style.backgroundImage = await `url(${image_URL})`;
@@ -105,14 +109,18 @@ getSuggestion.addEventListener('click', async () => {
   react_more_button.classList.remove("hide");
   document.querySelector(".movie-card").style.gridTemplateRows = "420px 50px";
   getSuggestion.classList.add("hide");
-  console.log(Json.results);
-  console.log(best_genre);
+
+  document.querySelector(".img-container").style.pointerEvents = "all";
+  res = await fetch(`https://api.themoviedb.org/3/movie/${suggested_movie_id}/reviews?api_key=4d9c9de3bdf0d3b6837c49c086e3b190`);
+  Json = await res.json();
+  document.querySelector(".img-container").href = await Json.results[0].url;
 })
 
 react_more_button.addEventListener('click', e => {
+  document.querySelector(".img-container").style.pointerEvents = "none";
   document.querySelector(".movie-card").style.gridTemplateRows = "420px 50px 80px";
   document.querySelector(".react-container").style.display = "flex";
   react_more_button.classList.add("hide");
-  getResponse(url, false);
   document.querySelector("h1").innerText = "Rate Movies";
+  getResponse(url, false);
 })
